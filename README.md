@@ -101,27 +101,22 @@ Watch video tutorials, webinars, sports, or stock tickers translucent on top of 
 `window-fx` manipulates native Win32 window attributes via the Windows User32 API:
 
 ```
-                  ┌───────────────────────────────┐                  
-                  │     Active Window Target      │                  
-                  │     HWND: WinGet, ID, A       │                  
-                  └───────────────┬───────────────┘                  
-                                  │                                  
-          ┌───────────────────────┼───────────────────────┐          
-          ▼                       ▼                       ▼          
-   [ Alpha Layer ]       [ Extended Styles ]       [ Z-Order Layer ] 
- SetLayeredWindowAttr     WS_EX_TRANSPARENT         WS_EX_TOPMOST    
- (WinSet Transparent)        (0x00000020)            (0x00000008)    
-          │                       │                       │          
-          ▼                       ▼                       ▼          
-    Visual Opacity         Click-Through            Always On Top    
-    (Alpha 0-255)         (Mouse Passthrough)      (Pinned on Top)   
-          │                       │                       │          
-          └───────────────────────┼───────────────────────┘          
-                                  ▼                                  
-                    ┌───────────────────────────┐                    
-                    │   Per-App Profile Cache   │                    
-                    │    ghost_profiles.ini     │                    
-                    └───────────────────────────┘                    
+                      ┌────────────────────────┐
+                      │  Active Window (HWND)  │
+                      └───────────┬────────────┘
+                                  │
+         ┌────────────────────────┼────────────────────────┐
+         ▼                        ▼                        ▼
+  [ Alpha Layer ]         [ Extended Styles ]     [ Z-Order Layer ]
+  SetLayeredWindowAttr    WS_EX_TRANSPARENT       WS_EX_TOPMOST
+  (0–255 Opacity)         (Click-Through)         (Always On Top)
+         │                        │                        │
+         └────────────────────────┼────────────────────────┘
+                                  ▼
+                     ┌──────────────────────────┐
+                     │    ghost_profiles.ini    │
+                     │  (Per-App Persistence)   │
+                     └──────────────────────────┘
 ```
 
 1. **Alpha Channel & Layering**: Uses `WS_EX_LAYERED` (`0x80000`) and calls `SetLayeredWindowAttributes` to blend opacity at the DWM compositor level with zero CPU overhead.
