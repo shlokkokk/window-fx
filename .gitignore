@@ -1,0 +1,12 @@
+# Runtime generated configuration
+ghost_profiles.ini
+
+# Compiled binaries
+*.exe
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
